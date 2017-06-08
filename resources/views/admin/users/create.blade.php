@@ -5,8 +5,8 @@
 
     {!! Form::open(['method' => 'POST','action' => 'AdminUsersController@store','files' => true]) !!}
         <div class="form-group">
-            {!! Form::label('file','Phone') !!}
-            {!! Form::file('file',null,['class' =>'form-control']) !!}
+            {!! Form::label('photo_id','Phone') !!}
+            {!! Form::file('photo_id',null,['class' =>'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('name','Name') !!}

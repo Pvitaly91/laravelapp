@@ -12,7 +12,7 @@
     <scrip src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></scrip>
     <scrip src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></scrip>
 </head>
-<body id="admin-page">
+<body id="admin-pagephp">
      <div id="wrapper">
          <nav class="navbar navbar-default navbar-static-top" role="navigation">
              <div class="navbar-header">
@@ -36,7 +36,10 @@
             </ul>-->
          </nav>
      </div>
-
+    <ul>
+        <li><a href="{{route('users.index')}}">Users list</a></li>
+        <li><a href="{{route('users.create')}}">Add user</a></li>
+    </ul>
 
      <div id="page-wrapper">
          <div class="container-fluid">
