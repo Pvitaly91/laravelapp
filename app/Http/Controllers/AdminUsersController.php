@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersRequest;
+use App\Http\Requests\UserEditRequest;
 use App\User;
 use App\Role;
 use App\Photo;
@@ -21,6 +22,9 @@ class AdminUsersController extends Controller
         return view('admin.users.index',compact('users'));
     }
 
+    public function getRoles(){
+        return  Role::pluck('name',"id")->all();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +32,8 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-       $roles = Role::pluck('name',"id")->all();
+        $roles = $this->getRoles();
+       //$roles = Role::pluck('name',"id")->all();
     /*$a = ['a' =>1,'b'=> 2, 'c'=>3,'d' => 4];
     $b = ['e' =>5, 'f' => 6,'j' =>7];
         $c = $a+$b;
@@ -81,7 +86,11 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.users.edit');
+        $user = User::find($id);
+
+        $user->allRoles = $this->getRoles();
+       //return $user->role;
+        return view('admin.users.edit',compact('user'));
     }
 
     /**
@@ -91,9 +100,28 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserEditRequest $request, $id)
     {
-        //
+        if(!trim($request->password)){
+            $input = $request->except('password');
+        }else{
+            $input = $request->all();
+        }
+        $user = User::findOrFail($id);
+
+        if($file = $request->file('photo_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['file' => $name]);
+            $input["photo_id"] = $photo->id;
+        }
+        $input['password'] = bcrypt(trim($request->password));
+       // dd($input);
+
+       // trim($request->password) ? $input['password'] = bcrypt(trim($request->password)) : $input['password'] = $user->password;
+        $user->update($input);
+        return redirect(route('users.index'));
+     // dd($request);
     }
 
     /**
