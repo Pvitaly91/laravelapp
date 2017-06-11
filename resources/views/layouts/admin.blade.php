@@ -37,8 +37,19 @@
          </nav>
      </div>
     <ul>
-        <li><a href="{{route('users.index')}}">Users list</a></li>
-        <li><a href="{{route('users.create')}}">Add user</a></li>
+        <li>
+            <h3>Users</h3>
+            <ul><li><a href="{{route('users.index')}}">Users list</a></li>
+                <li><a href="{{route('users.create')}}">Add user</a></li>
+            </ul>
+        </li>
+        <li>
+            <h3>Posts</h3>
+            <ul><li><a href="{{route('posts.index')}}">Posts list</a></li>
+                <li><a href="{{route('posts.create')}}">Add post</a></li>
+            </ul>
+        </li>
+
     </ul>
 
      <div id="page-wrapper">

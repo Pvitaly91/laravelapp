@@ -10,4 +10,23 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $langs;
+
+    function __construct()
+    {
+        //dd(__CLASS__);
+        $this->langs = ['ru' => 'ru','en' =>'en','ua' => 'ua'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getLangs( $lg = FALSE )
+    {
+        if($lg) {
+            return $this->langs[$lg];
+        }
+        return $this->langs;
+    }
 }

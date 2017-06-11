@@ -34,4 +34,20 @@ class User extends Authenticatable
     public function photo(){
         return $this->belongsTo('App\photo');
     }
+
+    public function setPasswordAttribute($password){
+        if(!empty($password)){
+            $this->attributes['password'] = bcrypt($password);
+        }
+    }
+    public function isAdmin(){
+        // need make method, for get admin group id
+        if($this->role->id == 1 && $this->is_active >= 1){
+            return true;
+        }
+        return false;
+    }
+    public function posts(){
+        return $this->hasMany('App\Post');
+    }
 }
